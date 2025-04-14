@@ -1,3 +1,10 @@
+nmap (7.95+dfsg-3deepin1) unstable; urgency=medium
+
+  * Disable LSX (-mlsx) on loong64 as it produces broken executables
+    as of gcc-12 = 12.3.0-17deepin2.
+
+ -- lichenggang <lichenggang@deepin.org>  Mon, 14 Apr 2025 18:21:28 +0800
+
 nmap (7.95+dfsg-3) unstable; urgency=medium
 
   * Team upload.
