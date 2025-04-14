@@ -2,12 +2,12 @@
 .\"     Title: nmap
 .\"    Author: [see the "Author" section]
 .\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
-.\"      Date: 09/28/2018
-.\"    Manual: [FIXME: manual]
-.\"    Source: [FIXME: source]
+.\"      Date: 04/12/2024
+.\"    Manual: Nmap vodič
+.\"    Source: Nmap
 .\"  Language: Croatian
 .\"
-.TH "NMAP" "1" "09/28/2018" "[FIXME: source]" "[FIXME: manual]"
+.TH "NMAP" "1" "04/12/2024" "Nmap" "Nmap vodič"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -168,8 +168,8 @@ DETEKCIJA OS\-a:
   \-\-osscan\-guess: Pogađaj OS malo agresivnije
 TIMING I PERFORMANSE:
   \-T[0\-6]: Podesi predložak za timing (veći broj je brže)
-  \-\-min\-hostgroup/max\-hostgroup <msec>: Paralelno skeniraj hostove / veličina sken grupe
-  \-\-min\-parallelism/max\-parallelism <msec>: Paraleliziraj sonde
+  \-\-min\-hostgroup/max\-hostgroup <numhosts>: Paralelno skeniraj hostove / veličina sken grupe
+  \-\-min\-parallelism/max\-parallelism <numprobes>: Paraleliziraj sonde
   \-\-min\-rtt\-timeout/max\-rtt\-timeout/initial\-rtt\-timeout <msec>: Navedi vrijeme potrebno za povratak (engl\&. round trip time) sonde\&.
   \-\-host\-timeout <msec>: Odustani od skeniranja ciljanog računala nakon navedenog vremena u milisekundama
   \-\-scan\-delay/\-\-max\-scan\-delay <msec>: Podesi pauzu između slanja upita
@@ -1511,7 +1511,7 @@ Skenira 4096 IP adresa za web serverom (bez prethodnog pinganja) i sprema izvje�
 .PP
 Poput svog autora niti Nmap nije savršen, no Vi možete pomoći slanjem prijava o greškama, pa čak i pišući patcheve\&. Ukoliko se Nmap ne ponaša onako kako očekujete od njega, najprije ga nadogradite na najnoviju verziju dostupnu na
 \m[blue]\fB\%https://nmap.org/\fR\m[]\&. Ukoliko je problem i dalje tu, istražite da li je već otkriven i prijavljen\&. Pokušajte "zaguglati" poruku o grešci ili otiđite na Nmap\-dev arhive na
-\m[blue]\fB\%http://seclists.org/\fR\m[]\&. Također pročitajte i kompletan manual\&. Ukoliko ništa od toga ne pomogne, pošaljite izvještaj o grešci na
+\m[blue]\fB\%https://seclists.org/\fR\m[]\&. Također pročitajte i kompletan manual\&. Ukoliko ništa od toga ne pomogne, pošaljite izvještaj o grešci na
 <dev@nmap\&.org>\&. Molim Vas napišite sve što ste do tad otkrili o problemu, te koju verziju Nmap\- imate i koju verziju OS\-a imate\&. Izvještaji o prijavljenim problemima i upiti o korištenju Nmap\-a koji su poslani na dev@nmap\&.org imaju više šansi da budu odgovoreni nego oni poslani direktno Fyodor\-u\&.
 .PP
 Patchevi za otklanjanje bugova su još i bolji od samih prijava\&. Osnovne upute za kreiranje patch datoteka s promjenama su dostupne na

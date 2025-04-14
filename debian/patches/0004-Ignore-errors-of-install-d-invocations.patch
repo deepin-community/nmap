@@ -1,0 +1,55 @@
+From: Hilko Bengen <bengen@debian.org>
+Date: Sun, 24 Dec 2023 20:35:03 +0100
+Subject: Ignore errors of "install -d" invocations
+
+---
+ Makefile.in       | 8 ++++----
+ nping/Makefile.in | 2 +-
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index 5139534..d09805a 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -313,7 +313,7 @@ distclean-%: clean-%
+ 	-cd $* && $(MAKE) distclean
+ 
+ install-nmap: $(TARGET)
+-	$(INSTALL) -d $(DESTDIR)$(bindir) $(DESTDIR)$(mandir)/man1 $(DESTDIR)$(nmapdatadir)
++	-$(INSTALL) -d $(DESTDIR)$(bindir) $(DESTDIR)$(mandir)/man1 $(DESTDIR)$(nmapdatadir)
+ 	$(INSTALL) -c -m 755 nmap $(DESTDIR)$(bindir)/nmap
+ # Use strip -x to avoid stripping dynamically loaded NSE functions. See
+ # http://seclists.org/nmap-dev/2007/q4/0272.html.
+@@ -389,8 +389,8 @@ NSE_FILES = scripts/script.db scripts/*.nse
+ NSE_LIB_LUA_FILES = nselib/*.lua nselib/*.luadoc
+ 
+ install-nse: $(TARGET)
+-	$(INSTALL) -d $(DESTDIR)$(nmapdatadir)/scripts
+-	$(INSTALL) -d $(DESTDIR)$(nmapdatadir)/nselib
++	-$(INSTALL) -d $(DESTDIR)$(nmapdatadir)/scripts
++	-$(INSTALL) -d $(DESTDIR)$(nmapdatadir)/nselib
+ 
+ # Remove obsolete scripts from a previous installation.
+ 	(cd $(DESTDIR)$(nmapdatadir)/scripts && rm -f $(OLD_SCRIPT_NAMES))
+@@ -398,7 +398,7 @@ install-nse: $(TARGET)
+ 	$(INSTALL) -c -m 644 nse_main.lua $(DESTDIR)$(nmapdatadir)/
+ 	$(INSTALL) -c -m 644 $(NSE_FILES) $(DESTDIR)$(nmapdatadir)/scripts
+ 	$(INSTALL) -c -m 644 $(NSE_LIB_LUA_FILES) $(DESTDIR)$(nmapdatadir)/nselib
+-	$(INSTALL) -d $(DESTDIR)$(nmapdatadir)/nselib/data
++	-$(INSTALL) -d $(DESTDIR)$(nmapdatadir)/nselib/data
+ 	for f in `find nselib/data -name .svn -prune -o -type d -print`; do \
+ 		$(INSTALL) -d $(DESTDIR)$(nmapdatadir)/$$f; \
+ 	done
+diff --git a/nping/Makefile.in b/nping/Makefile.in
+index 3cf9c55..0db9ea5 100644
+--- a/nping/Makefile.in
++++ b/nping/Makefile.in
+@@ -124,7 +124,7 @@ distclean: clean
+ 	stamp-h.in config.cache config.log config.status
+ 
+ install-nping: $(TARGET)
+-	$(INSTALL) -d $(DESTDIR)$(bindir) $(DESTDIR)$(mandir)/man1
++	-$(INSTALL) -d $(DESTDIR)$(bindir) $(DESTDIR)$(mandir)/man1
+ 	$(INSTALL) -c -m 755 nping $(DESTDIR)$(bindir)/nping
+ # Use strip -x to avoid stripping dynamically loaded NSE functions. See
+ # http://seclists.org/nmap-dev/2007/q4/0272.html.
