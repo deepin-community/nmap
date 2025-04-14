@@ -1,0 +1,22 @@
+From: Hilko Bengen <bengen@debian.org>
+Date: Fri, 29 Nov 2024 11:43:20 +0000
+Subject: Disable custom functions in ndiff/setup.py
+
+---
+ ndiff/setup.py | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
+
+diff --git a/ndiff/setup.py b/ndiff/setup.py
+index c163ae0..fed0bd4 100644
+--- a/ndiff/setup.py
++++ b/ndiff/setup.py
+@@ -296,8 +296,4 @@ class my_uninstall(Command):
+ setup(name="ndiff", scripts=["scripts/ndiff"],
+     py_modules=["ndiff"],
+     data_files=[("share/man/man1", ["docs/ndiff.1"])],
+-    cmdclass={
+-        "install_egg_info": null_command,
+-        "install": checked_install,
+-        "uninstall": my_uninstall
+-        })
++)

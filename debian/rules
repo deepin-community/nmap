@@ -1,48 +1,48 @@
 #!/usr/bin/make -f
 
-export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 
-ifeq ($(shell dpkg-vendor --derives-from Ubuntu && echo yes),yes)
-	VENDOR_CONFIGURE_OPTIONS = --with-libssh2=included
-endif
-
 %:
-	dh $@ --with=python3
+	dh $@
 
 override_dh_auto_clean:
 	dh_auto_clean
-	dh_auto_clean --sourcedir=ndiff --buildsystem=pybuild
-	rm -f nselib/data/jdwp-class/*.class nselib/data/psexec/nmap_service.ex*
+	dh_auto_clean --sourcedir=ndiff --buildsystem=pybuild -- --name=ndiff
+	dh_auto_clean --sourcedir=zenmap --buildsystem=pybuild -- --name=zenmap
 
 override_dh_auto_configure:
 	dh_auto_configure -- \
-		--with-liblua \
+		--with-liblua=/usr \
 		--with-liblinear \
 		--without-zenmap \
 		--without-ndiff \
 		--enable-ipv6 \
-		STRIP=/bin/true $(VENDOR_CONFIGURE_OPTIONS)
-	dh_auto_configure --sourcedir=ndiff --buildsystem=pybuild
+		STRIP=/bin/true
 
-override_dh_auto_build-indep:
-	dh_auto_build
-	dh_auto_build --sourcedir=ndiff --buildsystem=pybuild
+execute_after_dh_auto_configure-indep:
+	dh_auto_configure --sourcedir=ndiff --buildsystem=pybuild -- --name=ndiff
+	dh_auto_configure --sourcedir=zenmap --buildsystem=pybuild -- --name=zenmap
+
+mingw_CFLAGS = $(filter-out -mbranch-protection=standard,$(CFLAGS))
+
+execute_after_dh_auto_build-indep:
+	dh_auto_build --sourcedir=ndiff --buildsystem=pybuild -- --name=ndiff
+	dh_auto_build --sourcedir=zenmap --buildsystem=pybuild -- --name=zenmap
+
 	cd nselib/data/jdwp-class && /usr/lib/jvm/default-java/bin/javac *.java
 	cd nselib/data/psexec && \
-		i686-w64-mingw32-gcc ${CPPFLAGS} ${CFLAGS} -o nmap_service.exe nmap_service.c && \
+		i686-w64-mingw32-gcc ${CPPFLAGS} ${mingw_CFLAGS} -o nmap_service.exe nmap_service.c && \
 		gzip -c -n9 nmap_service.exe | base64 | tac > nmap_service.ex_
 
-override_dh_auto_test:
-	dh_auto_test --sourcedir=ndiff --buildsystem=pybuild
+override_dh_auto_test-arch:
 
-override_dh_auto_install:
-	dh_auto_install
-	dh_auto_install --sourcedir=ndiff --buildsystem=pybuild
+override_dh_auto_test-indep:
+	dh_auto_test --sourcedir=ndiff --buildsystem=pybuild -- --name=ndiff
+	dh_auto_test --sourcedir=zenmap --buildsystem=pybuild -- --name=zenmap
+
+execute_after_dh_auto_install-arch:
 	mv debian/tmp/usr/share/man/pt_PT debian/tmp/usr/share/man/pt
 
-override_dh_missing:
-	dh_missing -X/usr/bin/uninstall_ -Xca-bundle.crt -X.pyc -Xnmap_service.exe --fail-missing
-
-override_dh_install:
-	dh_install -X/usr/bin/uninstall_ -Xca-bundle.crt -X.pyc -Xnmap_service.exe
+execute_after_dh_auto_install-indep:
+	dh_auto_install --sourcedir=ndiff --buildsystem=pybuild --destdir=debian/ndiff -- --name=ndiff
+	dh_auto_install --sourcedir=zenmap --buildsystem=pybuild --destdir=debian/zenmap -- --name=zenmap

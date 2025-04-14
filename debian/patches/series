@@ -1,5 +1,5 @@
+0001-use-su-to-root.patch
 0002-Use-Debian-s-ca-certificates.patch
-0003-Link-against-lua-lpeg.patch
-0005-ncat-manpage-self-reference.patch
-0004-Python3-port-of-ndiff.patch
-update-mac-prefixes.patch
+0004-Ignore-errors-of-install-d-invocations.patch
+Disable-custom-functions-in-ndiff-setup.py.patch
+upstream-Fix-incompatible-pointer-type-error.patch
