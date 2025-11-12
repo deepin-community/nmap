@@ -4,8 +4,10 @@ set -e
 
 case "$1" in
     configure)
-        tac /usr/share/nmap/nselib/data/psexec/nmap_service.ex_ | base64 -d | zcat > /usr/share/nmap/nselib/data/psexec/nmap_service.exe ;;
-
+        if [ -f /usr/share/nmap/nselib/data/psexec/nmap_service.ex_ ]; then
+            tac /usr/share/nmap/nselib/data/psexec/nmap_service.ex_ | base64 -d | zcat > /usr/share/nmap/nselib/data/psexec/nmap_service.exe
+        fi
+    ;;
     abort-upgrade|abort-remove|abort-deconfigure) ;;
 
     *)

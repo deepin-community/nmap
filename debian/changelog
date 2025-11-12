@@ -1,3 +1,9 @@
+nmap (7.95+dfsg-3deepin2) unstable; urgency=medium
+
+  * chore: sw64 disable mingw build
+
+ -- hudeng <hudeng@deepin.org>  Wed, 12 Nov 2025 13:51:50 +0800
+
 nmap (7.95+dfsg-3deepin1) unstable; urgency=medium
 
   * Disable LSX (-mlsx) on loong64 as it produces broken executables
